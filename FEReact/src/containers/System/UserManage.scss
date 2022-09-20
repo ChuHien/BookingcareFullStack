@@ -1,0 +1,82 @@
+#customers {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  #customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  #customers tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #customers tr:hover {background-color: #ddd;}
+  
+  #customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #04AA6D;
+    color: white;
+  }
+
+  .btn-edit {
+    width: 50px;
+    border: none;
+    outline: none;
+    color: orange;
+    background: transparent;
+
+    &:hover {
+        background-color: transparent !important;
+        color: orange !important;
+    }
+  }
+
+  .btn-delete {
+    width: 20px;
+    border: none;
+    outline: none;
+    color: rgb(255, 0, 0);
+    background: transparent;
+
+    &:hover {
+        background-color: transparent !important;
+        color: rgb(159, 11, 11) !important;
+    }
+}
+
+.modal-user-container {
+  .model-content {
+    .modal-header {
+      button .close {
+        background-color: transparent !important;
+        color: white;
+        border: none;
+        font-size: 27px;
+      }
+    }
+  }
+  .modal-user-body {
+      display: flex;
+      gap: 10px; // khoang cach giua cac phan tu trong flex
+
+      .input-container {
+          display: flex; // giong voi row
+          flex-direction: column;
+          width: 50%;
+    
+          &.max-width-input {
+            width: 100%;
+          }
+          input {
+            border-radius: 3px;
+            border: 1p solid grey;
+            height: 30px;
+            outline: none;
+            padding: 0 10px;
+          }
+      }
+  }
+}
