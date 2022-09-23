@@ -2,6 +2,10 @@
     height: 80px;
     width: 100%;
     padding: 0 20px;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 1000;
 
     .home-header-content {
         width: 100%;
@@ -152,6 +156,7 @@
         display: flex;
         justify-content: center;
         align-items: flex-end;
+        padding-bottom: 10px;
         background-image: linear-gradient(rgba(255, 255, 255, 0.1),rgba(255, 255, 255, 0.9),rgba(255, 255, 255, 1));
         // padding: 0 50px;
         .option {
