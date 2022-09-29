@@ -7,6 +7,12 @@ import * as actions from '../../../store/actions';
 import './TableManageUser.scss'
 import 'react-image-lightbox/style.css';
 
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+
+const markdown = `Just a link: https://reactjs.com.`
+
+
 class TableManageUser extends Component {
 
     constructor(props){
@@ -71,6 +77,7 @@ class TableManageUser extends Component {
                         </tbody>
                     </table>
                 </div>
+                <ReactMarkdown children={markdown} remarkPlugins={[remarkGfm]} />,
             </div>
         )
     }
