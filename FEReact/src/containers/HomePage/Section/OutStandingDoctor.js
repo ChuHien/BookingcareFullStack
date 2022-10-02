@@ -4,6 +4,8 @@ import { FormattedMessage } from 'react-intl';
 import Slider from "react-slick";
 import * as actions from '../../../store/actions';
 import { LANGUAGES } from '../../../utils'
+import { withRouter } from 'react-router';
+
 class OutStandingDoctor extends Component {
 
     constructor(props){
@@ -23,6 +25,10 @@ class OutStandingDoctor extends Component {
                 topDoctors: this.props.topDoctors
             })
         }
+    }
+
+    handleViewDetailDoctor = (doctor) => {
+        this.props.history.push(`doctors/${doctor.id}`)
     }
     render() {
         let { topDoctors } = this.state;
@@ -46,7 +52,7 @@ class OutStandingDoctor extends Component {
                                     imageBase64 = new Buffer(item.image, 'base64').toString('binary')
                                 }
                                 return (
-                                    <div className="section-customize">
+                                    <div className="section-customize" onClick={() => this.handleViewDetailDoctor(item)}>
                                         <div className="customize-border">
                                             <div className="outer-bg">
                                                 <div className="bg-image section-outstanding-doctor"
@@ -85,4 +91,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OutStandingDoctor);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OutStandingDoctor));

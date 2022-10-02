@@ -1,5 +1,5 @@
 import actionTypes from './actionTypes';
-import { getAllCodeService, createNewUserService, getAllUsers, deleteUserService, editUserService } from '../../services/userService';
+import { getAllCodeService, createNewUserService, getAllUsers, deleteUserService, editUserService, getAllDoctorsService, saveInforDoctorService, updateInforDoctorService } from '../../services/userService';
 import { toast } from 'react-toastify';
 import { getTopDoctorHome } from '../../services/userService';
 // export const fetchGenderStart = () => ({
@@ -215,4 +215,83 @@ export const getTopDoctorsSuccess = (data) => ({
 
 export const getTopDoctorsFailed = () => ({
     type: actionTypes.FETCH_TOP_DOCTORS_FAILED,
+})
+
+export const fetchAllDoctors = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllDoctorsService();
+            if(res && res.errCode === 0) {
+                dispatch(fetchAllDoctorsSuccess(res.data))
+            } else {
+                dispatch(fetchAllDoctorsFailed());
+            }
+        } catch (e) {
+            dispatch(fetchAllDoctorsFailed())
+            console.log('get All user error', e)
+        }
+    }
+}
+
+export const fetchAllDoctorsSuccess = (data) => ({
+    type: actionTypes.FETCH_ALL_DOCTORS_SUCCESS,
+    data
+})
+
+export const fetchAllDoctorsFailed = () => ({
+    type: actionTypes.FETCH_ALL_DOCTORS_FAILED,
+})
+
+export const saveInforDoctor = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await saveInforDoctorService(data);
+            console.log('check Save infor doctor', res)
+            if(res && res.errCode === 0) {
+                toast.success("Save infor doctor success !");
+                dispatch(saveInforDoctorSuccess());
+                dispatch(getAllUser());
+            } else {
+                dispatch(saveInforDoctorFailed());
+            }
+        } catch (e) {
+            dispatch(saveInforDoctorFailed())
+            console.log('fetchRoleStart error', e)
+        }
+    }
+}
+
+export const saveInforDoctorSuccess = () => ({
+    type: actionTypes.SAVE_INFOR_DOCTOR_SUCCESS
+})
+
+export const saveInforDoctorFailed = () => ({
+    type: actionTypes.SAVE_INFOR_DOCTOR_FAILED
+})
+
+export const updateInforDoctor = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await updateInforDoctorService(data);
+            console.log('check update infor doctor', res)
+            if(res && res.errCode === 0) {
+                toast.success("Update infor doctor success !");
+                dispatch(updateInforDoctorSuccess());
+                dispatch(getAllUser());
+            } else {
+                dispatch(updateInforDoctorFailed());
+            }
+        } catch (e) {
+            dispatch(updateInforDoctorFailed())
+            console.log('fetchRoleStart error', e)
+        }
+    }
+}
+
+export const updateInforDoctorSuccess = () => ({
+    type: actionTypes.UPDATE_INFOR_DOCTOR_SUCCESS
+})
+
+export const updateInforDoctorFailed = () => ({
+    type: actionTypes.UPDATE_INFOR_DOCTOR_FAILED
 })

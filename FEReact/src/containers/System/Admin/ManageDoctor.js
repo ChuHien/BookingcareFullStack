@@ -11,12 +11,8 @@ import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
 import 'react-markdown-editor-lite/lib/index.css';
 import Select from 'react-select';
-
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' },
-];
+import { getDetailDoctorService } from '../../../services/userService';
+import { CRUD_ACTIONS } from '../../../utils';
 
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 
@@ -31,15 +27,45 @@ class ManageDoctor extends Component {
             contentHTML: '',
             selectedDoctor: '',
             description: '',
+            listDoctors: [],
+            action: CRUD_ACTIONS.CREATE
         }
     }
 
     async componentDidMount() {
-       
+        this.props.fetchAllDoctors()
     }
 
-    componentDidUpdate(prevState, prevProps) {
-        
+    buildDataInputSelect = (inputData) => {
+        let result = [];
+        let language = this.props.language;
+        if(inputData && inputData.length > 0) {
+            inputData.map((item, index) => {
+                let object = {};
+                let labelVi = `${item.lastName} ${item.firstName}`;
+                let labelEn = `${item.firstName} ${item.lastName}`;
+                object.label = language === LANGUAGES.VI ? labelVi : labelEn;
+                object.value = item.id;
+                result.push(object)
+            })
+        }
+        return result;
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.allDoctors !== this.props.allDoctors) {
+            let dataSelect = this.buildDataInputSelect(this.props.allDoctors);
+            this.setState({
+                listDoctors: dataSelect
+            })
+        }
+
+        if (prevProps.language !== this.props.language) {
+            let dataSelect = this.buildDataInputSelect(this.props.allDoctors);
+            this.setState({
+                listDoctors: dataSelect
+            })
+        }
     }
 
     handleEditorChange = ({ html, text }) => {
@@ -50,13 +76,48 @@ class ManageDoctor extends Component {
     }
     
     handleSaveContentDoctor = () => {
-        console.log('check state', this.state);
+        let data = {
+            contentHTML: this.state.contentHTML,
+            contentMarkdown: this.state.contentMarkdown,
+            description: this.state.description,
+            id: this.state.selectedDoctor.value
+        }
+        if(this.state.action === CRUD_ACTIONS.CREATE) {
+            this.props.saveInforDoctor(data);
+        }
+
+        if(this.state.action === CRUD_ACTIONS.EDIT) {
+            this.props.updateInforDoctor(data);
+        }
+        this.setState({
+            contentMarkdown: '',
+            contentHTML: '',
+            selectedDoctor: '',
+            description: '',
+            action: CRUD_ACTIONS.CREATE
+        })
     }
 
-    handleChange = (selectedDoctor) => {
-        this.setState({ selectedDoctor }, () =>
-            console.log(`Option selected:`, this.state.selectedDoctor)
-        );
+    handleChange = async (selectedDoctor) => {
+        let res = await getDetailDoctorService(selectedDoctor.value);
+        if(res && res.errCode === 0 && res.data && res.data.Markdown) {
+            let markdown = res.data.Markdown;
+            this.setState({
+                contentMarkdown: markdown.contentMarkdown,
+                contentHTML: markdown.contentHTML,
+                description: markdown.description,
+                action: CRUD_ACTIONS.EDIT,
+                selectedDoctor: selectedDoctor
+            })
+        } else {
+            this.setState({
+                contentMarkdown: '',
+                contentHTML: '',
+                description: '',
+                action: CRUD_ACTIONS.CREATE,
+                selectedDoctor: selectedDoctor
+            })
+        }
     };
     
     handleOnChangeDesc = (event) => {
@@ -65,7 +126,7 @@ class ManageDoctor extends Component {
         })
     }
     render() {
-        const { selectedDoctor } = this.state;
+        const { selectedDoctor, listDoctors } = this.state;
         return (
             <div className="manage-doctor-container">
                 <div className="manage-doctor-title">
@@ -78,7 +139,7 @@ class ManageDoctor extends Component {
                         <Select
                             value={selectedDoctor}
                             onChange={this.handleChange}
-                            options={options}
+                            options={this.state.listDoctors}
                         />
                     </div>
                     <div className="content-right form-group">
@@ -97,13 +158,15 @@ class ManageDoctor extends Component {
                     <MdEditor 
                         style={{ height: '500px' }}
                         renderHTML={text => mdParser.render(text)} 
-                        onChange={this.handleEditorChange} />
+                        onChange={this.handleEditorChange}
+                        value={this.state.contentMarkdown}
+                    />
                 </div>
                 <button 
                     className="save-content-doctor"
                     onClick={() => this.handleSaveContentDoctor()}
                 >
-                    Save
+                {this.state.action === CRUD_ACTIONS.CREATE ? 'Save' : 'Edit'}
                 </button>
             </div>
         )
@@ -114,14 +177,16 @@ class ManageDoctor extends Component {
 const mapStateToProps = state => {
     return {
         language: state.app.language,
-        users: state.admin.users
+        users: state.admin.users,
+        allDoctors: state.admin.allDoctors
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        getAllUser: () => dispatch(actions.getAllUser()),
-        deleteUser: (userId) => dispatch(actions.deleteUser(userId)),
+        fetchAllDoctors: () => dispatch(actions.fetchAllDoctors()),
+        saveInforDoctor: (data) => dispatch(actions.saveInforDoctor(data)),
+        updateInforDoctor: (data) => dispatch(actions.updateInforDoctor(data)),
     };
 };
 
