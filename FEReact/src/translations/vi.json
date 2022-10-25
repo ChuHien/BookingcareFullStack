@@ -34,6 +34,9 @@
             "manage-specialty": "Quản lí chuyên khoa",
             "handbook": "Cẩm nang",
             "manage-handbook": "Quản lí cẩm nang"
+        },
+        "doctor": {
+            "manage-schedule": "Quản lý kế hoạch khám bệnh"
         }
     },
     "manage-user": {
@@ -57,5 +60,33 @@
         "handbook": "Cẩm nang",
         "medical-facility": "Cơ sở y tế nổi bật",
         "specialty": "Chuyên khoa phổ biến"
+    },
+    "manage-schedule": {
+        "title": "Quản  lí kế hoạch khám bệnh của bác sĩ",
+        "choose-doctor": "Chọn bác sĩ",
+        "choose-date": "Chọn ngày",
+        "save": "Lưu thông tin"
+    },
+    "doctor-detail": {
+        "schedule": "Lịch khám",
+        "no-schedule": "Bác sĩ không có lịch khám trong thời gian này",
+        "choose": "Chọn ",
+        "book-free": " và đặt miễn phí"
+    },
+    "admin": {
+        "manage-doctor": {
+            "title": "Quản lí bác sĩ",
+            "choose-doctor": "Chọn bác sĩ",
+            "introduction-infor": "Thông tin giới thiệu",
+            "specialized-infor": "Thông tin chuyên ngành",
+            "save": "Lưu thông tin",
+            "change": "Lưu thay đổi",
+            "price": "Giá khám bệnh",
+            "payment": "Phương thức thanh tóan",
+            "province": "Tỉnh thành",
+            "clinic": "Tên phòng khám",
+            "clinic-address": "Địa chỉ phòng khám",
+            "note": "Ghi chú"
+        }
     }
 }

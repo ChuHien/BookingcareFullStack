@@ -48,6 +48,13 @@ const updateInforDoctorService = async (data) => {
     return axios.post('/api/edit-infor-doctor', data);
 }
 
+const bulkCreateScheduleService = async (data) => {
+    return axios.post(`/api/bulk-create-schedule`, data)
+}
+
+const getScheduleDoctorService = async (doctorId, date) => {
+    return axios.get(`/api/get-schedule-doctor-by-date?doctorId=${doctorId}&date=${date}`)
+}
 export { 
     handleLoginAPI, 
     getAllUsers, 
@@ -59,5 +66,7 @@ export {
     getAllDoctorsService,
     saveInforDoctorService,
     getDetailDoctorService,
-    updateInforDoctorService
+    updateInforDoctorService,
+    bulkCreateScheduleService,
+    getScheduleDoctorService
 };

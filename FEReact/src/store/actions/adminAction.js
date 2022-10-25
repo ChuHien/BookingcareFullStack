@@ -295,3 +295,104 @@ export const updateInforDoctorSuccess = () => ({
 export const updateInforDoctorFailed = () => ({
     type: actionTypes.UPDATE_INFOR_DOCTOR_FAILED
 })
+
+export const fetchAllScheduleHours = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllCodeService("TIME");
+            if(res && res.errCode ===0) {
+                dispatch(fetchAllScheduleHoursSuccess(res.allcodes))
+            } else {
+                dispatch(fetchAllScheduleHoursFailed());
+            }
+        } catch (e) {
+            dispatch(fetchAllScheduleHoursFailed())
+            console.log('fetchPositionStart error', e)
+        }
+    }
+}
+
+export const fetchAllScheduleHoursSuccess = (timeData) => ({
+    type: actionTypes.FETCH_ALLCODE_SCHEDULE_HOURS_SUCCESS,
+    data: timeData
+})
+export const fetchAllScheduleHoursFailed = () => ({
+    type: actionTypes.FETCH_ALLCODE_SCHEDULE_HOURS_FAILED
+})
+
+//doctor Price
+export const getDoctorPrices = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllCodeService("PRICE");
+            if(res && res.errCode === 0) {
+                dispatch(getDoctorPriceSuccess(res.allcodes))
+            } else {
+                dispatch(getDoctorPriceFailed());
+            }
+        } catch (e) {
+            dispatch(getDoctorPriceFailed())
+            console.log('fetchDoctorStart error', e)
+        }
+    }
+}
+
+export const getDoctorPriceSuccess = (priceData) => ({
+    type: actionTypes.GET_DOCTOR_PRICE_SUCCESS,
+    data: priceData
+})
+export const getDoctorPriceFailed = () => ({
+    type: actionTypes.GET_DOCTOR_PRICE_FAILED
+})
+
+// payment
+
+export const getPayments = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllCodeService("PAYMENT");
+            if(res && res.errCode === 0) {
+                dispatch(getPaymentSuccess(res.allcodes))
+            } else {
+                dispatch(getPaymentFailed());
+            }
+        } catch (e) {
+            dispatch(getPaymentFailed())
+            console.log('fetch Payment error', e)
+        }
+    }
+}
+
+export const getPaymentSuccess = (paymentData) => ({
+    type: actionTypes.GET_PAYMENT_SUCCESS,
+    data: paymentData
+})
+export const getPaymentFailed = () => ({
+    type: actionTypes.GET_PAYMENT_FAILED
+})
+
+//province
+
+export const getProvinces = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllCodeService("PROVINCE");
+            if(res && res.errCode === 0) {
+                dispatch(getProvinceSuccess(res.allcodes))
+            } else {
+                dispatch(getProvinceFailed());
+            }
+        } catch (e) {
+            dispatch(getProvinceFailed())
+            console.log('fetch Payment error', e)
+        }
+    }
+}
+
+export const getProvinceSuccess = (provinceData) => ({
+    type: actionTypes.GET_PROVINCE_SUCCESS,
+    data: provinceData
+})
+export const getProvinceFailed = () => ({
+    type: actionTypes.GET_PROVINCE_FAILED
+})

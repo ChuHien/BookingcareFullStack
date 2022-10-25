@@ -7,7 +7,11 @@ const initialState = {
     positions: [],
     users: [],
     topDoctors: [],
-    allDoctors: []
+    allDoctors: [],
+    allTimeHours: [],
+    allDoctorPrices: [],
+    allPayments: [],
+    allProvinces: []
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -65,6 +69,26 @@ const adminReducer = (state = initialState, action) => {
             return {
                 ...state
             }
+        case actionTypes.FETCH_ALLCODE_SCHEDULE_HOURS_SUCCESS:
+            state.allTimeHours = action.data
+            return {
+                ...state
+            }
+        case actionTypes.GET_DOCTOR_PRICE_SUCCESS:
+            state.allDoctorPrices = action.data
+            return {
+                ...state
+            }
+        case actionTypes.GET_PAYMENT_SUCCESS:
+            state.allPayments = action.data
+            return {
+                ...state
+            }
+        case actionTypes.GET_PROVINCE_SUCCESS:
+            state.allProvinces = action.data
+            return {
+                ...state
+            }    
         default:
             return state;
     }
