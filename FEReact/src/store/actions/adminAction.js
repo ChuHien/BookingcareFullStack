@@ -1,5 +1,5 @@
 import actionTypes from './actionTypes';
-import { getAllCodeService, createNewUserService, getAllUsers, deleteUserService, editUserService, getAllDoctorsService, saveInforDoctorService, updateInforDoctorService } from '../../services/userService';
+import { getAllCodeService, createNewUserService, getAllUsers, deleteUserService, editUserService, getAllDoctorsService, saveInforDoctorService, updateInforDoctorService, getExtrainforDoctorService } from '../../services/userService';
 import { toast } from 'react-toastify';
 import { getTopDoctorHome } from '../../services/userService';
 // export const fetchGenderStart = () => ({
@@ -395,4 +395,29 @@ export const getProvinceSuccess = (provinceData) => ({
 })
 export const getProvinceFailed = () => ({
     type: actionTypes.GET_PROVINCE_FAILED
+})
+
+//extra infor doctor
+export const getExtrainforDoctor = (doctorId) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getExtrainforDoctorService(doctorId)
+            if(res && res.errCode === 0) {
+                dispatch(getExtrainforDoctorSuccess(res.data))
+            } else {
+                dispatch(getExtrainforDoctorFailed());
+            }
+        } catch (e) {
+            dispatch(getExtrainforDoctorFailed())
+            console.log('fetch Payment error', e)
+        }
+    }
+}
+
+export const getExtrainforDoctorSuccess = (extrainforData) => ({
+    type: actionTypes.GET_EXTRAINFOR_DOCTOR_SUCCESS,
+    data: extrainforData
+})
+export const getExtrainforDoctorFailed = () => ({
+    type: actionTypes.GET_EXTRAINFOR_DOCTOR_FAILED
 })

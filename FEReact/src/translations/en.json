@@ -84,7 +84,13 @@
         "schedule": "Schedule",
         "no-schedule": "The doctor does not have an appointment during this time",
         "choose": "Choose ",
-        "book-free": " and book free"
+        "book-free": " and book free",
+        "extrainfor": {
+            "clinic-address-title": "CLINIC ADDRESS",
+            "price": "price: ",
+            "show-detail": " Show detail",
+            "hide-detail": "Hide detail"
+        }
     },
     "admin": {
         "manage-doctor": {

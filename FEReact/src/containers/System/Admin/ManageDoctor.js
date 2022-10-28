@@ -76,7 +76,7 @@ class ManageDoctor extends Component {
                     let labelVi = `${item.valueVi} VND`;
                     let labelEn = `${item.valueEn} USD`;
                     object.label = language === LANGUAGES.VI ? labelVi : labelEn;
-                    object.value = item.id;
+                    object.value = item.keyMap;
                     result.push(object)
                 })
                 return result;
@@ -86,7 +86,7 @@ class ManageDoctor extends Component {
                 let labelVi = item.valueVi;
                 let labelEn = item.valueEn;
                 object.label = language === LANGUAGES.VI ? labelVi : labelEn;
-                object.value = item.id;
+                object.value = item.keyMap;
                 result.push(object)
             })
         }
@@ -206,14 +206,42 @@ class ManageDoctor extends Component {
 
     handleChange = async (selectedDoctor) => {
         let res = await getDetailDoctorService(selectedDoctor.value);
+        let { listPayment, listPrice, listProvince } = this.state;
         if(res && res.errCode === 0 && res.data && res.data.Markdown) {
             let markdown = res.data.Markdown;
+            let addressClinic = '', nameClinic = '', note = '', paymentId = '', priceId = '', provinceId = '';
+            let selectedPayment = '', selectedPrice = '', selectedProvince = '';
+            
+            if(res.data.Doctor_Infor) {
+                let doctor_Infor = res.data.Doctor_Infor;
+                addressClinic = doctor_Infor.addressClinic;
+                nameClinic = doctor_Infor.nameClinic;
+                note = doctor_Infor.note;
+                priceId = doctor_Infor.priceId;
+                paymentId = doctor_Infor.paymentId;
+                provinceId = doctor_Infor.provinceId;
+                selectedPayment = listPayment.find(item => {
+                    if(item.value === paymentId) return item
+                })
+                selectedPrice = listPrice.find(item => {
+                    if(item.value === priceId) return item
+                })
+                selectedProvince = listProvince.find(item => {
+                    if(item.value === provinceId) return item
+                })
+            }
             this.setState({
                 contentMarkdown: markdown.contentMarkdown,
                 contentHTML: markdown.contentHTML,
                 description: markdown.description,
                 action: CRUD_ACTIONS.EDIT,
-                selectedDoctor: selectedDoctor
+                selectedDoctor: selectedDoctor,
+                addressClinic: addressClinic,
+                nameClinic: nameClinic,
+                note: note,
+                selectedPrice: selectedPrice,
+                selectedPayment: selectedPayment,
+                selectedProvince: selectedProvince,
             })
         } else {
             this.setState({
@@ -221,7 +249,13 @@ class ManageDoctor extends Component {
                 contentHTML: '',
                 description: '',
                 action: CRUD_ACTIONS.CREATE,
-                selectedDoctor: selectedDoctor
+                selectedDoctor: selectedDoctor,
+                addressClinic: '',
+                nameClinic: '',
+                note: '',
+                selectedPrice: '',
+                selectedPayment: '',
+                selectedProvince: '',
             })
         }
     };

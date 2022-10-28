@@ -126,6 +126,17 @@ let getDetailDoctor = (inputId) => {
                     include: [
                         { model: db.Markdown, attributes: ['contentMarkdown', 'contentHTML', 'description']},
                         { model: db.Allcode, as: 'positionData', attributes: ['valueEn', 'valueVi']},
+                        { 
+                            model: db.Doctor_Infor, 
+                            attributes: {
+                                exclude: ['id', 'doctorId']
+                            },
+                            include: [
+                                { model: db.Allcode, as: 'priceData', attributes: ['valueEn', 'valueVi']},
+                                { model: db.Allcode, as: 'paymentData', attributes: ['valueEn', 'valueVi']},
+                                { model: db.Allcode, as: 'provinceData', attributes: ['valueEn', 'valueVi']},
+                            ],
+                        }
                     ],
                     raw: false,
                     nest: true
@@ -286,6 +297,48 @@ let getScheduleByDate = async(doctorId, date) => {
     })
 }
 
+let getExtrainforDoctor = async(inputId) => {
+    return new Promise( async (resolve, reject) => {
+        try {
+            if(!inputId) {
+                resolve({
+                    errCode: 1,
+                    errMessage: "Missing params"
+                })
+            } else {
+                let data = await db.Doctor_Infor.findOne({
+                    where: {
+                        doctorId: inputId
+                    },
+                    attributes: {
+                        exclude: ['id', 'doctorId']
+                    },
+                    include: [
+                        { model: db.Allcode, as: 'priceData', attributes: ['valueEn', 'valueVi']},
+                        { model: db.Allcode, as: 'paymentData', attributes: ['valueEn', 'valueVi']},
+                        { model: db.Allcode, as: 'provinceData', attributes: ['valueEn', 'valueVi']},
+                    ],
+                    raw: false,
+                    nest: true
+                })
+                if(!data) {
+                    resolve({
+                        errCode: 2,
+                        data: {}
+                    })
+                } else {
+                    resolve({
+                        errCode: 0,
+                        data: data
+                    })
+                }
+            }
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
 module.exports = {
     getTopDoctorHome: getTopDoctorHome,
     getAllDoctors: getAllDoctors,
@@ -293,5 +346,6 @@ module.exports = {
     getDetailDoctor: getDetailDoctor,
     updateInforDoctor: updateInforDoctor,
     bulkCreateSchedule: bulkCreateSchedule,
-    getScheduleByDate: getScheduleByDate
+    getScheduleByDate: getScheduleByDate,
+    getExtrainforDoctor: getExtrainforDoctor
 }

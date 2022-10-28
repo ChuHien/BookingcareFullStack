@@ -11,7 +11,8 @@ const initialState = {
     allTimeHours: [],
     allDoctorPrices: [],
     allPayments: [],
-    allProvinces: []
+    allProvinces: [],
+    extrainforDoctor: ''
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -88,7 +89,12 @@ const adminReducer = (state = initialState, action) => {
             state.allProvinces = action.data
             return {
                 ...state
-            }    
+            }
+        case actionTypes.GET_EXTRAINFOR_DOCTOR_SUCCESS:
+            state.extrainforDoctor = action.data
+            return {
+                ...state
+            }
         default:
             return state;
     }

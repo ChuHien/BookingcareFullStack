@@ -71,7 +71,13 @@
         "schedule": "Lịch khám",
         "no-schedule": "Bác sĩ không có lịch khám trong thời gian này",
         "choose": "Chọn ",
-        "book-free": " và đặt miễn phí"
+        "book-free": " và đặt miễn phí",
+        "extrainfor": {
+            "clinic-address-title": "ĐỊA CHỈ KHÁM",
+            "price": "Giá khám: ",
+            "show-detail": " Xem chi tiết",
+            "hide-detail": "Ẩn chi tiết"
+        }
     },
     "admin": {
         "manage-doctor": {
