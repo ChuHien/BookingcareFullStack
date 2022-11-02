@@ -59,6 +59,15 @@ const getScheduleDoctorService = async (doctorId, date) => {
 const getExtrainforDoctorService = async (doctorId) => {
     return axios.get(`/api/get-extra-infor-doctor-by-id?doctorId=${doctorId}`)
 }
+
+const getProfileDoctorService = async (doctorId) => {
+    return axios.get(`/api/get-profile-doctor?doctorId=${doctorId}`)
+}
+
+const bookAppointmentService = async (data) => {
+    return axios.post(`/api/patient-book-appointment`, data)
+}
+
 export { 
     handleLoginAPI, 
     getAllUsers, 
@@ -73,5 +82,7 @@ export {
     updateInforDoctorService,
     bulkCreateScheduleService,
     getScheduleDoctorService,
-    getExtrainforDoctorService
+    getExtrainforDoctorService,
+    getProfileDoctorService,
+    bookAppointmentService
 };
