@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import './BookingModal.scss'
-import { LANGUAGES } from '../../../utils'
+import { LANGUAGES } from '../../utils'
 import { FormattedMessage } from 'react-intl';
-import * as actions from '../../../store/actions';
+import * as actions from '../../store/actions';
 
 class DefaultClass extends Component {
 
@@ -32,7 +31,7 @@ class DefaultClass extends Component {
 
     render() {
         return (
-            <div className="doctor-extra-infor-container">
+            <div>
                 hello word form default
             </div>
         );

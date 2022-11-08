@@ -92,6 +92,22 @@
             "hide-detail": "Hide detail"
         }
     },
+    "book-appointment": {
+        "infor-booking": "Information to book a medical appointment",
+        "fullname": "Fullname",
+        "phoneNumber": "Phone number",
+        "email": "Email",
+        "address": "Address",
+        "reason": "Reason for examination",
+        "birthday": "Birthday",
+        "confirm": "Confirm",
+        "cancel": "Cancel",
+        "gender": "Gender",
+        "profile-doctor": {
+            "booking-free": "Booking free",
+            "price": "Examination price: "
+        }
+    },
     "admin": {
         "manage-doctor": {
             "title": "Manage doctor",

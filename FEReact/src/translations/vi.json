@@ -79,6 +79,22 @@
             "hide-detail": "Ẩn chi tiết"
         }
     },
+    "book-appointment": {
+        "infor-booking": "Thông tin đặt lịch khám bệnh",
+        "fullname": "Họ và tên",
+        "phoneNumber": "Số điện thoại",
+        "email": "Email",
+        "address": "Địa chỉ liên hệ",
+        "reason": "Lý do khám",
+        "birthday": "Ngày sinh",
+        "confirm": "Xác nhận",
+        "cancel": "Hủy",
+        "gender": "Giới tính",
+        "profile-doctor": {
+            "booking-free": "Đặt lịch miễn phí",
+            "price": "Giá khám: "
+        }
+    },
     "admin": {
         "manage-doctor": {
             "title": "Quản lí bác sĩ",
