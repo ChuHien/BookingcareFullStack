@@ -33,7 +33,6 @@ class OutStandingDoctor extends Component {
     render() {
         let { topDoctors } = this.state;
         let language = this.props.language;
-        console.log('check props doctor', topDoctors)
         return (
             <div className="section-share section-outstanding-doctor">
                 <div className="section-container">
