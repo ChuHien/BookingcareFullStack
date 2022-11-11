@@ -8,6 +8,7 @@ import {getProfileDoctorService} from '../../../services/userService';
 import NumberFormat from 'react-number-format';
 import _ from 'lodash';
 import moment from 'moment';
+import {Link} from 'react-router-dom';
 
 class ProfileDoctor extends Component {
 
@@ -48,6 +49,10 @@ class ProfileDoctor extends Component {
 
     }
 
+    handleSeeMore = () => {
+        
+    }
+
     renderTimeBooking = (dataTime) => {
         if(dataTime && !_.isEmpty(dataTime)) {
             let time = this.props.language ===LANGUAGES.VI ? dataTime.timeTypeData.valueVi : dataTime.timeTypeData.valueEn;
@@ -69,7 +74,7 @@ class ProfileDoctor extends Component {
 
     render() {
         let { dataProfile } = this.state;
-        let { isShowDescription, dataTime } = this.props;
+        let { isShowDescription, dataTime, isShowPrice, isShowLink, doctorId } = this.props;
         let nameVi='', nameEn='';
         if(dataProfile && dataProfile.positionData) {
             nameVi = `${dataProfile.positionData.valueVi}, ${dataProfile.lastName} ${dataProfile.firstName}`;
@@ -100,28 +105,35 @@ class ProfileDoctor extends Component {
                         }
                     </div>
                 </div>
-                <div className="price">
-                    <FormattedMessage id="book-appointment.profile-doctor.price"/> 
-                    {dataProfile && dataProfile.Doctor_Infor && this.props.language === LANGUAGES.VI ?
-                        <NumberFormat
-                            value={dataProfile.Doctor_Infor.priceData.valueVi}
-                            displayType={'text'}
-                            thousandSeparator={true}
-                            suffix={' VND'}
-                        />
-                        : ''
-                    }
+                {isShowPrice === true &&
+                    <div className="price">
+                        <FormattedMessage id="book-appointment.profile-doctor.price"/> 
+                        {dataProfile && dataProfile.Doctor_Infor && this.props.language === LANGUAGES.VI ?
+                            <NumberFormat
+                                value={dataProfile.Doctor_Infor.priceData.valueVi}
+                                displayType={'text'}
+                                thousandSeparator={true}
+                                suffix={' VND'}
+                            />
+                            : ''
+                        }
 
-                    {dataProfile && dataProfile.Doctor_Infor && this.props.language === LANGUAGES.EN ?
-                        <NumberFormat
-                            value={dataProfile.Doctor_Infor.priceData.valueEn}
-                            displayType={'text'}
-                            thousandSeparator={true}
-                            suffix={' USD'}
-                        />
-                        : ''
-                    }
-                </div>
+                        {dataProfile && dataProfile.Doctor_Infor && this.props.language === LANGUAGES.EN ?
+                            <NumberFormat
+                                value={dataProfile.Doctor_Infor.priceData.valueEn}
+                                displayType={'text'}
+                                thousandSeparator={true}
+                                suffix={' USD'}
+                            />
+                            : ''
+                        }
+                    </div>
+                }
+                {isShowLink === true &&
+                    <div className="see-more">
+                        <Link to={`/doctors/${doctorId}`}>Xem them</Link>
+                    </div>
+                }
             </div>
         );
     }

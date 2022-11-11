@@ -18,7 +18,6 @@ class DoctorSchedule extends Component {
             allAvailableTime: [],
             isOpenModal: false,
             dataScheduleTimeModal: {}
-
         }
     }
 
@@ -28,7 +27,13 @@ class DoctorSchedule extends Component {
             this.setState({
                 allDays: arrDays,
             })
-        } 
+        }
+        if(this.props.doctorIdFromParent) {
+            let res = await getScheduleDoctorService(this.props.doctorIdFromParent, arrDays[0].value);
+            this.setState({
+                allAvailableTime: res.data ? res.data : ''
+            })
+        }
     }
 
     capitalizeFirstLetter(string) {

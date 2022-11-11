@@ -93,7 +93,9 @@ let saveDetailInforDoctor = (inputData) => {
                     paymentId: inputData.paymentId,
                     nameClinic: inputData.nameClinic,
                     addressClinic: inputData.addressClinic,
-                    note: inputData.note
+                    note: inputData.note,
+                    clinicId: inputData.clinicId,
+                    specialtyId: inputData.specialtyId
                 })
 
                 resolve({
@@ -190,7 +192,9 @@ let updateInforDoctor = (inputData) => {
                     doctorInfor.paymentId = inputData.paymentId;
                     doctorInfor.nameClinic = inputData.nameClinic;
                     doctorInfor.addressClinic = inputData.addressClinic;
-                    doctorInfor.note = inputData.note
+                    doctorInfor.note = inputData.note,
+                    doctorInfor.clinicId = inputData.clinicId,
+                    doctorInfor.specialtyId = inputData.specialtyId
                     await doctorInfor.save();
                 } else {
                     await db.Doctor_Infor.create({

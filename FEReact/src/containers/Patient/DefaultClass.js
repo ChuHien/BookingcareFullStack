@@ -32,7 +32,7 @@ class DefaultClass extends Component {
     render() {
         return (
             <div>
-                hello word form default
+                hello world form default
             </div>
         );
     }

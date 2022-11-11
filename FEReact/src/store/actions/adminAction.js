@@ -397,6 +397,7 @@ export const getProvinceFailed = () => ({
     type: actionTypes.GET_PROVINCE_FAILED
 })
 
+
 //extra infor doctor
 export const getExtrainforDoctor = (doctorId) => {
     return async (dispatch, getState) => {
