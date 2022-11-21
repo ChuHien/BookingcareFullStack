@@ -15,6 +15,7 @@ import { getDetailDoctorService } from '../../../services/userService';
 import { CRUD_ACTIONS } from '../../../utils';
 import { toast } from 'react-toastify';
 import {getAllSpecialtyService} from '../../../services/specialtyService'
+import { getAllClinicService } from '../../../services/clinicService';
 
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 
@@ -33,6 +34,7 @@ class ManageDoctor extends Component {
             description: '',
             listDoctors: [],
             specialties: [],
+            clinics: [],
             action: CRUD_ACTIONS.CREATE,
 
             // save to doctor info
@@ -61,10 +63,16 @@ class ManageDoctor extends Component {
         this.props.getDoctorPrices();
         this.props.getPayments();
         this.props.getProvinces();
-        let res = await getAllSpecialtyService();
-        if (res && res.errCode === 0) {
+        let res1 = await getAllSpecialtyService();
+        let res2 = await getAllClinicService();
+        if (res1 && res1.errCode === 0) {
             this.setState({
-                specialties: res.data ? res.data : []
+                specialties: res1.data ? res1.data : []
+            })
+        }
+        if (res2 && res2.errCode === 0) {
+            this.setState({
+                clinics: res2.data ? res2.data : []
             })
         }
     }
@@ -98,6 +106,14 @@ class ManageDoctor extends Component {
                 return result;
             }
             if(type === 'SPECIALTY') {
+                inputData.map((item, index) => {
+                    let object = {};
+                    object.label = item.name;
+                    object.value = item.id;
+                    result.push(object)
+                })
+            }
+            if(type === 'CLINIC') {
                 inputData.map((item, index) => {
                     let object = {};
                     object.label = item.name;
@@ -153,18 +169,27 @@ class ManageDoctor extends Component {
             })
         }
 
+        if (this.state.clinics !== prevState.clinics) {
+            let dataSelectClinic = this.buildDataInputSelect(this.state.clinics, 'CLINIC');
+            this.setState({
+                listClinic: dataSelectClinic
+            })
+        }
+
         if (prevProps.language !== this.props.language) {
             let dataSelect = this.buildDataInputSelect(this.props.allDoctors, 'USER');
             let dataSelectPrice = this.buildDataInputSelect(this.props.allDoctorPrices, 'PRICE');
             let dataSelectProvince = this.buildDataInputSelect(this.props.allProvinces)
             let dataSelectPayment = this.buildDataInputSelect(this.props.allPayments);
             let dataSelectSpecialty = this.buildDataInputSelect(this.state.specialties, 'SPECIALTY');
+            let dataSelectClinic = this.buildDataInputSelect(this.state.clinics, 'CLINIC');
             this.setState({
                 listDoctors: dataSelect,
                 listPrice: dataSelectPrice,
                 listProvince: dataSelectProvince,
                 listPayment: dataSelectPayment,
-                listSpecialty: dataSelectSpecialty
+                listSpecialty: dataSelectSpecialty,
+                listClinic: dataSelectClinic
             })
         }
     }
@@ -307,6 +332,7 @@ class ManageDoctor extends Component {
                 selectedPrice: '',
                 selectedPayment: '',
                 selectedProvince: '',
+                selectedClinic: '',
             })
         }
     };
