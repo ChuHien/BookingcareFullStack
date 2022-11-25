@@ -106,9 +106,7 @@ class BookingModal extends Component {
     }
 
     handleConfirmBooking = async () => {
-        console.log('check state', this.state)
         //validate
-        let date = new Date(this.state.birthday).getTime();
         let timeString = this.buildTimeBooking(this.props.dataTime);
         let doctorName = this.buidDoctorName(this.props.dataTime)
         let res = await bookAppointmentService({
@@ -117,7 +115,7 @@ class BookingModal extends Component {
             email: this.state.email,
             address: this.state.address,
             reason: this.state.reason,
-            date: date,
+            date: this.props.dataTime.date,
             gender: this.state.gender,
             doctorId: this.state.doctorId,
             timeType: this.state.timeType,

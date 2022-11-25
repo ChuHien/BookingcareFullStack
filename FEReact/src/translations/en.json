@@ -49,7 +49,8 @@
         },
 
         "doctor": {
-            "manage-schedule": "Manage Schedule"
+            "manage-schedule": "Manage Schedule",
+            "manage-patient": "Manage patient"
         }
     },
     "manage-user": {
@@ -74,7 +75,7 @@
         "medical-facility": "Medical facility",
         "specialty": "Specialty"
     },
-     "manage-schedule": {
+    "manage-schedule": {
         "title": "Manage doctor's examination plan",
         "choose-doctor": "Choose doctor",
         "choose-date": "Choose a date",
@@ -125,5 +126,15 @@
             "specialty": "Specialty",
             "choose-clinic": "Choose clinic"
         }
+    },
+    "manage-patient": {
+        "title": "Management of medical examination patients",
+        "choose-date": "Choose a date of examination",
+        "stt": "STT",
+        "time": "Time",
+        "fullname": "Fullname",
+        "address": "Address",
+        "gender": "Gender",
+        "confirm": "Confirm" 
     }
 }

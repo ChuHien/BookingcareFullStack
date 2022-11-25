@@ -1,6 +1,7 @@
 import db from '../models/index';
 require('dotenv').config();
 import _ from 'lodash';
+import emailService from '../services/emailService'
 
 const MAX_NUMBER_SCHEDULE = process.env.MAX_NUMBER_SCHEDULE;
 let getTopDoctorHome = (limit) => {
@@ -401,6 +402,102 @@ let getProfileDoctor = async(inputId) => {
     })
 }
 
+let getListPatientForDoctor = async(inputId, inputDate) => {
+    return new Promise( async (resolve, reject) => {
+        try {
+            if(!inputId || !inputDate) {
+                resolve({
+                    errCode: 1,
+                    errMessage: "Missing params"
+                })
+            } else {
+                let data = await db.Booking.findAll({
+                    where: {
+                        doctorId: inputId,
+                        statusId: 'S2',
+                        date: inputDate
+                    },
+                    attributes: {
+                        exclude: ['token']
+                    },
+                    include: [
+                        { 
+                            model: db.User,
+                            as: 'patientData',
+                            attributes: ['email', 'gender', 'address', 'firstName'],
+                            include: [
+                                { model: db.Allcode, as: 'genderData', attributes: ['valueEn', 'valueVi']},
+                            ],
+                        },
+                        { model: db.Allcode, as: 'timeTypeDataPatient', attributes: ['valueEn', 'valueVi']}
+                    ],
+                    raw: false,
+                    nest: true
+                })
+
+                if(data && data.image) {
+                    data.image = new Buffer(data.image, 'base64').toString('binary')
+                }
+
+                if(!data) {
+                    resolve({
+                        errCode: 2,
+                        data: {}
+                    })
+                } else {
+                    resolve({
+                        errCode: 0,
+                        data: data
+                    })
+                }
+            }
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
+let sendRemedy = async(data) => {
+    return new Promise( async (resolve, reject) => {
+        try {
+            if(!data.email || !data.doctorId || !data.patientId || !data.timeType || !data.imgBase64) {
+                resolve({
+                    errCode: 1,
+                    errMessage: "Missing params"
+                })
+            } else {
+                //update patient status
+                let appointment = await db.Booking.findOne({
+                    where: {
+                        doctorId: data.doctorId,
+                        patientId: data.patientId,
+                        timeType: data.timeType,
+                        statusId: 'S2'
+                    },
+                    raw: false
+                })
+                if(appointment){
+                    appointment.statusId = 'S3'
+                    await appointment.save();
+                    //send email remedy
+                    await emailService.sendAttachmentsEmail(data)
+                    resolve({
+                        errCode: 0,
+                        message: 'oke'
+                    })
+                } else {
+                    resolve({
+                        errCode: 2,
+                        message: 'not found'
+                    })
+                }
+            }
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
 module.exports = {
     getTopDoctorHome: getTopDoctorHome,
     getAllDoctors: getAllDoctors,
@@ -410,5 +507,7 @@ module.exports = {
     bulkCreateSchedule: bulkCreateSchedule,
     getScheduleByDate: getScheduleByDate,
     getExtrainforDoctor: getExtrainforDoctor,
-    getProfileDoctor: getProfileDoctor
+    getProfileDoctor: getProfileDoctor,
+    getListPatientForDoctor: getListPatientForDoctor,
+    sendRemedy: sendRemedy
 }

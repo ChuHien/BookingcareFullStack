@@ -72,6 +72,14 @@ const postVerifyBookAppointmentService = async (data) => {
     return axios.post(`/api/verify-book-appointment`, data)
 }
 
+const getListPatientForDoctorService = async (doctorId, date) => {
+    return axios.get(`/api/get-list-patient-for-doctor?doctorId=${doctorId}&date=${date}`)
+}
+
+const sendRemedyService = async (data) => {
+    return axios.post(`/api/send-remedy`, data)
+}
+
 export { 
     handleLoginAPI, 
     getAllUsers, 
@@ -89,5 +97,7 @@ export {
     getExtrainforDoctorService,
     getProfileDoctorService,
     bookAppointmentService,
-    postVerifyBookAppointmentService
+    postVerifyBookAppointmentService,
+    getListPatientForDoctorService,
+    sendRemedyService
 };

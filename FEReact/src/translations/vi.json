@@ -36,7 +36,8 @@
             "manage-handbook": "Quản lí cẩm nang"
         },
         "doctor": {
-            "manage-schedule": "Quản lý kế hoạch khám bệnh"
+            "manage-schedule": "Quản lý kế hoạch khám bệnh",
+            "manage-patient": "Quản lý bệnh nhân"
         }
     },
     "manage-user": {
@@ -112,5 +113,15 @@
             "specialty": "Chuyên khoa",
             "choose-clinic": "Chọn phòng khám"
         }
+    },
+    "manage-patient": {
+        "title": "Quản lí bệnh nhân khám bệnh",
+        "choose-date": "Chọn ngày khám",
+        "stt": "STT",
+        "time": "Thời gian",
+        "fullname": "Họ và tên",
+        "address": "Địa chỉ",
+        "gender": "Giới tính",
+        "confirm": "Xác nhận" 
     }
 }

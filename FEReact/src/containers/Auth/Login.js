@@ -94,7 +94,7 @@ class Login extends Component {
                                     onKeyDown={(event) => this.handleKeyDown(event)}
                                 />
                                 <span onClick={()=>this.handleShowHidePassword()}>
-                                    <i class={showPassword ? 'fas fa-eye' : 'fas fa-eye-slash'}></i>
+                                    <i className={showPassword ? 'fas fa-eye' : 'fas fa-eye-slash'}></i>
                                 </span>
                             </div>
                         </div>
